@@ -1,0 +1,168 @@
+---
+import ArchiveProof from '@/components/landing/archive-proof.astro'
+import LandingAsciiField from '@/components/landing/ascii-field.astro'
+import SignalMarquee from '@/components/landing/signal-marquee.astro'
+import Link from '@/components/link.astro'
+import PageHead from '@/components/page-head.astro'
+import { LANDING, SITE } from '@/consts'
+import Layout from '@/layouts/layout.astro'
+import { getArchiveStats, getRecentPosts } from '@/lib/data-utils'
+
+const archivePosts = await getRecentPosts(
+  Math.max(SITE.featuredPostCount + 1, 4),
+)
+const archiveStats = await getArchiveStats()
+const [featuredPost, ...supportingPosts] = archivePosts
+const words = LANDING.name.split(' ')
+const heroPills = [
+  'кожне число — з документа',
+  'виноски на першоджерела',
+  'історія правок відкрита',
+]
+const method = [
+  'Реєстри, декларації, судові рішення, звіти партій — і слова самих фігурантів.',
+  'Згенеровані довідки й досьє — не джерела: у виносці лише документ.',
+]
+---
+
+<Layout variant="landing">
+  <PageHead slot="head" title={SITE.title} description={LANDING.description} />
+
+  <section
+    class="relative isolate min-h-[calc(100svh-4.6rem)] overflow-hidden bg-[#050505]"
+  >
+    <LandingAsciiField class="opacity-[0.76]" />
+    <div
+      class="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-black via-black/55 to-transparent"
+    >
+    </div>
+    <div
+      class="pointer-events-none absolute inset-0 [background-image:linear-gradient(to_bottom,transparent_0,transparent_11px,rgba(255,255,255,0.045)_12px)] [background-size:100%_12px] opacity-35"
+    >
+    </div>
+    <div
+      class="landing-dot-mass absolute top-8 -left-24 h-[26rem] w-[26rem] sm:h-[34rem] sm:w-[34rem]"
+    >
+    </div>
+    <div
+      class="landing-dot-mass landing-dot-mass--reverse absolute -right-28 bottom-[-8rem] h-[28rem] w-[28rem] sm:h-[36rem] sm:w-[36rem]"
+    >
+    </div>
+    <div class="landing-grain pointer-events-none absolute inset-0"></div>
+
+    <div
+      class="mx-auto grid min-h-[calc(100svh-4.6rem)] max-w-[1400px] grid-cols-1 px-4 py-6 sm:px-6 sm:py-12 lg:grid-cols-[minmax(0,1.15fr)_minmax(320px,0.85fr)] lg:px-8 lg:py-16"
+    >
+      <div class="flex flex-col justify-between gap-6 sm:gap-10 lg:pr-10">
+        <div class="@container max-w-4xl" transition:name="page-intro">
+          <p class="landing-kicker">{LANDING.eyebrow}</p>
+          <h1
+            class="landing-wordmark mt-4 text-[clamp(3rem,25cqi,13rem)] leading-[0.86] font-semibold tracking-[-0.08em] whitespace-nowrap text-white uppercase sm:mt-6"
+          >
+            {
+              words.map((word, i) => (
+                <span class:list={['block', i < words.length - 1 && 'text-white/40']}>
+                  {word}
+                </span>
+              ))
+            }
+          </h1>
+          <p
+            class="landing-manifesto mt-6 max-w-xl text-[0.98rem] leading-7 text-balance text-white/70 sm:mt-8 sm:max-w-2xl sm:text-lg sm:leading-8"
+          >
+            {LANDING.manifesto}
+          </p>
+        </div>
+
+        <div class="max-w-xl space-y-4 sm:max-w-none sm:space-y-6">
+          <div class="flex flex-col gap-3 sm:flex-row">
+            <Link href={LANDING.primaryLink.href} class="landing-button group">
+              <span>{LANDING.primaryLink.label}</span>
+              <span
+                class="font-mono text-[0.7rem] tracking-[0.25em] text-white/42 uppercase transition-colors duration-300 group-hover:text-white/70"
+              >
+                {LANDING.primaryLink.note}
+              </span>
+            </Link>
+            <Link
+              href={LANDING.secondaryLink.href}
+              class="landing-button landing-button--ghost group"
+            >
+              <span>{LANDING.secondaryLink.label}</span>
+              <span
+                class="font-mono text-[0.7rem] tracking-[0.25em] text-white/38 uppercase transition-colors duration-300 group-hover:text-white/62"
+              >
+                {LANDING.secondaryLink.note}
+              </span>
+            </Link>
+          </div>
+
+          <div
+            class="hidden flex-wrap items-center gap-3 text-[0.72rem] tracking-[0.2em] text-white/42 uppercase sm:flex"
+          >
+            {
+              heroPills.map((pill) => (
+                <span class="rounded-full border border-white/12 px-3 py-1.5">
+                  {pill}
+                </span>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="hidden items-end justify-end lg:flex">
+        <div
+          class="landing-terminal relative w-full max-w-[32rem] overflow-hidden"
+        >
+          <div
+            class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.14),transparent_60%)] opacity-70"
+          >
+          </div>
+          <div class="landing-terminal-bar">
+            <span>метод</span>
+            <span>
+              {String(archiveStats.postCount).padStart(2, '0')} публ.
+            </span>
+          </div>
+          <div class="relative space-y-6 p-6">
+            <div class="space-y-3">
+              <p
+                class="font-mono text-[0.68rem] tracking-[0.28em] text-white/42 uppercase"
+              >
+                звідки факти
+              </p>
+              <div class="space-y-2 text-sm text-white/75">
+                {method.map((note) => <p>{note}</p>)}
+              </div>
+            </div>
+            <div class="grid grid-cols-3 gap-3 border-t border-white/10 pt-4">
+              {
+                LANDING.capabilityLines.map((capability) => (
+                  <div class="space-y-1">
+                    <p class="font-mono text-[0.66rem] tracking-[0.28em] text-white/35 uppercase">
+                      {capability.label}
+                    </p>
+                    <p class="text-lg leading-none font-medium text-white">
+                      {capability.title}
+                    </p>
+                  </div>
+                ))
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <SignalMarquee lines={LANDING.marqueeLines} />
+
+  <ArchiveProof
+    title={LANDING.archiveTitle}
+    intro={LANDING.archiveIntro}
+    featuredPost={featuredPost ?? null}
+    supportingPosts={supportingPosts.slice(0, SITE.featuredPostCount)}
+    stats={archiveStats}
+  />
+</Layout>

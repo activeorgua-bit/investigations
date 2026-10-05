@@ -1,0 +1,329 @@
+---
+import { withBase } from '@/lib/url'
+import Breadcrumbs from '@/components/breadcrumbs.astro'
+import Link from '@/components/link.astro'
+import PostHead from '@/components/post-head.astro'
+import PostNavigation from '@/components/post-navigation.astro'
+import SubpostsHeader from '@/components/subposts-header.astro'
+import SubpostsSidebar from '@/components/subposts-sidebar.astro'
+import TOCHeader from '@/components/toc-header.astro'
+import TOCSidebar from '@/components/toc-sidebar.astro'
+import { Button } from '@/components/ui/button'
+import Layout from '@/layouts/layout.astro'
+import {
+  getAdjacentPosts,
+  getAllPostsAndSubposts,
+  getCombinedReadingTime,
+  getParentId,
+  getParentPost,
+  getPostReadingTime,
+  getSubpostCount,
+  getTOCSections,
+  hasSubposts,
+  isSubpost,
+  parseAuthors,
+} from '@/lib/data-utils'
+import { formatDate } from '@/lib/utils'
+import { Icon } from 'astro-icon/components'
+import { Image } from 'astro:assets'
+import { render } from 'astro:content'
+import 'katex/dist/katex.min.css'
+
+export async function getStaticPaths() {
+  const posts = await getAllPostsAndSubposts()
+  return posts.map((post) => ({
+    params: { id: post.id },
+    props: post,
+  }))
+}
+
+const post = Astro.props
+const currentPostId = Astro.params.id
+const { Content, headings } = await render(post)
+const authors = await parseAuthors(post.data.authors ?? [])
+
+const isCurrentSubpost = isSubpost(currentPostId)
+const navigation = await getAdjacentPosts(currentPostId)
+const parentPost = isCurrentSubpost ? await getParentPost(currentPostId) : null
+
+const hasChildPosts = await hasSubposts(currentPostId)
+const subpostCount = !isCurrentSubpost
+  ? await getSubpostCount(currentPostId)
+  : 0
+const postReadingTime = await getPostReadingTime(currentPostId)
+const combinedReadingTime =
+  hasChildPosts && !isCurrentSubpost
+    ? await getCombinedReadingTime(currentPostId)
+    : null
+
+const tocSections = await getTOCSections(currentPostId)
+---
+
+<Layout variant="immersive">
+  <PostHead slot="head" post={post} />
+  {
+    (hasChildPosts || isCurrentSubpost) && (
+      <SubpostsHeader
+        slot="subposts-navigation"
+        parentId={isCurrentSubpost ? getParentId(currentPostId) : currentPostId}
+      />
+    )
+  }
+  {
+    headings?.length > 0 &&
+      !(
+        isCurrentSubpost &&
+        headings.length === 1 &&
+        headings[0].text === post.data.title
+      ) && <TOCHeader slot="table-of-contents" headings={headings} />
+  }
+
+  <section
+    class="relative overflow-hidden border-b border-white/10 bg-black/30"
+  >
+    <div class="mx-auto max-w-[1400px] px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
+      <Breadcrumbs
+        variant="immersive"
+        items={[
+          { href: '/blog', label: 'Розслідування', icon: 'lucide:library-big' },
+          ...(isCurrentSubpost && parentPost
+            ? [
+                {
+                  href: `/blog/${parentPost.id}`,
+                  label: parentPost.data.title,
+                  icon: 'lucide:book-open',
+                },
+                {
+                  href: `/blog/${currentPostId}`,
+                  label: post.data.title,
+                  icon: 'lucide:file-text',
+                },
+              ]
+            : [
+                {
+                  href: `/blog/${currentPostId}`,
+                  label: post.data.title,
+                  icon: 'lucide:book-open-text',
+                },
+              ]),
+        ]}
+      />
+
+      <div
+        class="mt-8 grid gap-10 xl:grid-cols-[minmax(0,1.08fr)_minmax(280px,0.92fr)] xl:items-start"
+      >
+        <div
+          class="immersive-animate-in max-w-4xl"
+          transition:name="page-intro"
+        >
+          <p class="landing-section-label">
+            {isCurrentSubpost ? 'Частина' : 'Розслідування'}
+          </p>
+          <h1
+            class:list={['mt-4 scroll-mt-31 font-semibold text-balance text-white', post.data.title.length > 60 ? 'text-[clamp(2rem,4vw,3.6rem)] leading-[1.02] tracking-[-0.045em]' : 'text-[clamp(2.6rem,5.5vw,5.2rem)] leading-[0.95] tracking-[-0.06em]']}
+            id="post-title"
+          >
+            {post.data.title}
+          </h1>
+
+          <div class="mt-6 flex flex-wrap gap-3">
+            {
+              authors.length > 0 &&
+                authors.map((author) => (
+                  <div class="immersive-chip">
+                    <Image
+                      src={author.avatar}
+                      alt={author.name}
+                      width={20}
+                      height={20}
+                      class="size-5 rounded-full"
+                    />
+                    {author.isRegistered ? (
+                      <Link href={`/authors/${author.id}`} class="text-white">
+                        {author.name}
+                      </Link>
+                    ) : (
+                      <span>{author.name}</span>
+                    )}
+                  </div>
+                ))
+            }
+          </div>
+
+          {
+            post.data.description && (
+              <p class="immersive-copy mt-6 max-w-2xl text-base leading-7 sm:text-lg sm:leading-8">
+                {post.data.description}
+              </p>
+            )
+          }
+
+          {
+            post.data.tags && post.data.tags.length > 0 && (
+              <div class="mt-6 flex flex-wrap gap-2">
+                {post.data.tags.map((tag) => (
+                  <a
+                    href={withBase(`/tags/${tag}`)}
+                    class="immersive-chip immersive-chip--solid"
+                  >
+                    <Icon name="lucide:hash" class="size-3" />
+                    {tag}
+                  </a>
+                ))}
+              </div>
+            )
+          }
+        </div>
+
+        <aside class="immersive-panel immersive-animate-in self-start">
+          <p class="immersive-eyebrow">Публікація</p>
+          <div class="immersive-rule-list mt-6">
+            <div class="space-y-2">
+              <p
+                class="font-mono text-[0.66rem] tracking-[0.26em] text-white/34 uppercase"
+              >
+                Опубліковано
+              </p>
+              <p class="text-base text-white/68">
+                {formatDate(post.data.date)}
+              </p>
+            </div>
+            <div class="space-y-2">
+              <p
+                class="font-mono text-[0.66rem] tracking-[0.26em] text-white/34 uppercase"
+              >
+                Час читання
+              </p>
+              <p class="text-base text-white/68">
+                {postReadingTime}
+                {
+                  combinedReadingTime &&
+                    combinedReadingTime !== postReadingTime && (
+                      <span class="text-white/42">
+                        {' '}
+                        (разом {combinedReadingTime})
+                      </span>
+                    )
+                }
+              </p>
+            </div>
+            {
+              subpostCount > 0 && (
+                <div class="space-y-2">
+                  <p class="font-mono text-[0.66rem] tracking-[0.26em] text-white/34 uppercase">
+                    Структура
+                  </p>
+                  <p class="text-base text-white/68">
+                    частин: {subpostCount}
+                  </p>
+                </div>
+              )
+            }
+          </div>
+        </aside>
+      </div>
+
+      {
+        post.data.image && (
+          <div class="mt-10 overflow-hidden border border-white/12 bg-black/40">
+            <Image
+              src={post.data.image}
+              alt={post.data.title}
+              width={1200}
+              height={630}
+              class="mx-auto w-full max-w-5xl object-contain"
+              transition:name="page-media"
+            />
+          </div>
+        )
+      }
+    </div>
+  </section>
+
+  <section>
+    <div class="mx-auto max-w-[1400px] px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+      <div
+        class="grid gap-8 xl:grid-cols-[minmax(220px,1fr)_minmax(0,820px)_minmax(220px,1fr)] xl:items-start"
+      >
+        {
+          tocSections.length > 0 && (
+            <TOCSidebar sections={tocSections} currentPostId={currentPostId} />
+          )
+        }
+
+        <div class="col-start-1 space-y-8 xl:col-start-2">
+          <div class="immersive-prose-shell">
+            <article class="prose max-w-none">
+              <Content />
+            </article>
+          </div>
+
+          <PostNavigation
+            newerPost={navigation.newer}
+            olderPost={navigation.older}
+            parentPost={isCurrentSubpost ? navigation.parent : undefined}
+          />
+        </div>
+
+        {
+          (hasChildPosts || isCurrentSubpost) && (
+            <SubpostsSidebar
+              parentId={
+                isCurrentSubpost ? getParentId(currentPostId) : currentPostId
+              }
+            />
+          )
+        }
+      </div>
+    </div>
+  </section>
+
+  <Button
+    variant="outline"
+    size="icon"
+    className="group fixed right-8 bottom-8 z-50 hidden"
+    id="scroll-to-top"
+    title="Нагору"
+    aria-label="Нагору"
+  >
+    <Icon
+      name="lucide:arrow-up"
+      class="mx-auto size-4 transition-all group-hover:-translate-y-0.5"
+    />
+  </Button>
+
+  <script is:inline data-astro-rerun>
+    ;(() => {
+      window.__blogScrollToTopCleanup?.()
+
+      const scrollToTopButton = document.getElementById('scroll-to-top')
+      const footer = document.querySelector('footer')
+
+      if (!(scrollToTopButton instanceof HTMLElement)) return
+      if (!(footer instanceof HTMLElement)) return
+
+      const handleClick = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+      }
+
+      const handleScroll = () => {
+        const footerRect = footer.getBoundingClientRect()
+        const isFooterVisible = footerRect.top <= window.innerHeight
+
+        scrollToTopButton.classList.toggle(
+          'hidden',
+          window.scrollY <= 300 || isFooterVisible,
+        )
+      }
+
+      scrollToTopButton.addEventListener('click', handleClick)
+      window.addEventListener('scroll', handleScroll, { passive: true })
+      handleScroll()
+
+      window.__blogScrollToTopCleanup = () => {
+        scrollToTopButton.removeEventListener('click', handleClick)
+        window.removeEventListener('scroll', handleScroll)
+      }
+    })()
+  </script>
+</Layout>
