@@ -11,8 +11,9 @@ const mark = (size) => `
 <svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 64 64">
   <rect width="64" height="64" rx="14" fill="#050505"/>
   <rect x="3.5" y="3.5" width="57" height="57" rx="11" fill="none" stroke="#ffffff" stroke-opacity="0.18"/>
-  <text x="32" y="41.5" text-anchor="middle" font-family="${MONO}" font-size="25" font-weight="700"
-        letter-spacing="-1" fill="#ffffff">WW</text>
+  <path d="M10 32 C18 20 46 20 54 32 C46 44 18 44 10 32 Z" fill="none" stroke="#ffffff" stroke-width="3.2" stroke-linejoin="round"/>
+  <circle cx="32" cy="32" r="7.5" fill="#ffffff"/>
+  <circle cx="34.5" cy="29.5" r="2.2" fill="#050505"/>
 </svg>`
 
 // the ASCII field of the landing page, reduced to a deterministic glyph grid
@@ -45,9 +46,10 @@ const card = (w, h) => `
     </linearGradient>
   </defs>
   <text x="72" y="104" font-family="${MONO}" font-size="20" letter-spacing="6" fill="#ffffff" fill-opacity="0.5">РОЗСЛІДУВАННЯ НА ОСНОВІ ВІДКРИТИХ ДАНИХ</text>
-  <g font-family="${SANS}" font-weight="700" fill="#ffffff" letter-spacing="-5">
-    <text x="62" y="318" font-size="196" fill-opacity="0.4">WE</text>
-    <text x="62" y="490" font-size="196">WATCH</text>
+  <g font-family="${SANS}" font-weight="700" fill="#ffffff" letter-spacing="-4">
+    <text x="62" y="250" font-size="142" fill-opacity="0.4">PEOPLE</text>
+    <text x="62" y="384" font-size="142" fill-opacity="0.4">ARE</text>
+    <text x="62" y="518" font-size="142">WATCHING</text>
   </g>
   <text x="72" y="${h - 62}" font-family="${MONO}" font-size="20" letter-spacing="3" fill="#ffffff" fill-opacity="0.42">кожне число — з документа · виноски на першоджерела</text>
 </svg>`

@@ -10,9 +10,10 @@
     </linearGradient>
   </defs>
   <text x="72" y="104" font-family="'Consolas','DejaVu Sans Mono','Courier New',monospace" font-size="20" letter-spacing="6" fill="#ffffff" fill-opacity="0.5">РОЗСЛІДУВАННЯ НА ОСНОВІ ВІДКРИТИХ ДАНИХ</text>
-  <g font-family="'Segoe UI','Arial','DejaVu Sans',sans-serif" font-weight="700" fill="#ffffff" letter-spacing="-5">
-    <text x="62" y="318" font-size="196" fill-opacity="0.4">WE</text>
-    <text x="62" y="490" font-size="196">WATCH</text>
+  <g font-family="'Segoe UI','Arial','DejaVu Sans',sans-serif" font-weight="700" fill="#ffffff" letter-spacing="-4">
+    <text x="62" y="250" font-size="142" fill-opacity="0.4">PEOPLE</text>
+    <text x="62" y="384" font-size="142" fill-opacity="0.4">ARE</text>
+    <text x="62" y="518" font-size="142">WATCHING</text>
   </g>
   <text x="72" y="568" font-family="'Consolas','DejaVu Sans Mono','Courier New',monospace" font-size="20" letter-spacing="3" fill="#ffffff" fill-opacity="0.42">кожне число — з документа · виноски на першоджерела</text>
 </svg>
