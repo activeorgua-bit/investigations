@@ -115,6 +115,8 @@ export type FooterContent = {
 
 export type LandingContent = {
   name: string
+  /** великий напис на головній (якщо не задано — name) */
+  wordmark?: string
   monogram: string
   eyebrow: string
   description: string

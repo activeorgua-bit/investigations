@@ -16,11 +16,11 @@ const SITE_URL = resolveSiteUrl({
 const REPO = 'https://github.com/activeorgua-bit/investigations'
 
 export const SITE: Site = {
-  title: 'We Watch',
+  title: 'People are watching',
   description:
     'Розслідування на основі відкритих даних: кожне число — з факту, кожна цитата — з першоджерела, кожна виноска веде на документ.',
   href: SITE_URL,
-  author: 'We Watch',
+  author: 'People are watching',
   locale: 'uk-UA',
   featuredPostCount: 3,
   postsPerPage: 10,
@@ -69,8 +69,8 @@ export const PROFILE: Profile = {
 }
 
 export const LANDING: LandingContent = {
-  name: 'We Watch',
-  monogram: 'WW',
+  name: 'People are watching',
+  monogram: 'PW',
   eyebrow: 'Розслідування на основі відкритих даних',
   description: SITE.description,
   manifesto:
@@ -108,7 +108,7 @@ export const LANDING: LandingContent = {
 const currentYear = new Date().getFullYear()
 
 export const FOOTER: FooterContent = {
-  eyebrow: 'We Watch',
+  eyebrow: 'People are watching',
   headline: 'Кожне число — з документа.',
   copy: PROFILE.summary,
   primaryContact: {
@@ -125,7 +125,7 @@ export const FOOTER: FooterContent = {
     { href: '/rss.xml', label: 'RSS' },
     { href: REPO, label: 'GitHub' },
   ],
-  signature: `We Watch / ${currentYear}`,
+  signature: `People are watching / ${currentYear}`,
 }
 
 export const ICON_MAP: IconMap = {

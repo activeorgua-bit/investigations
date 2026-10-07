@@ -1,4 +1,4 @@
-# We Watch
+# People are watching
 
 Сайт розслідувань: https://activeorgua-bit.github.io/investigations/
 
@@ -40,4 +40,4 @@ authors: ['wewatch']
 ## Ліцензія
 
 Дизайн — шаблон [ascii-astro-erudite](https://github.com/Ducksss/ascii-astro-erudite) (MIT, © Chai Pin Zheng),
-адаптований під розслідування. Тексти статей — © We Watch.
+адаптований під розслідування. Тексти статей — © People are watching.

@@ -13,7 +13,7 @@ const archivePosts = await getRecentPosts(
 )
 const archiveStats = await getArchiveStats()
 const [featuredPost, ...supportingPosts] = archivePosts
-const words = LANDING.name.split(' ')
+const words = (LANDING.wordmark || LANDING.name).split(' ')
 const heroPills = [
   'кожне число — з документа',
   'виноски на першоджерела',
@@ -57,7 +57,7 @@ const method = [
         <div class="@container max-w-4xl" transition:name="page-intro">
           <p class="landing-kicker">{LANDING.eyebrow}</p>
           <h1
-            class="landing-wordmark mt-4 text-[clamp(3rem,25cqi,13rem)] leading-[0.86] font-semibold tracking-[-0.08em] whitespace-nowrap text-white uppercase sm:mt-6"
+            class="landing-wordmark mt-4 text-[clamp(3rem,19cqi,13rem)] leading-[0.86] font-semibold tracking-[-0.08em] whitespace-nowrap text-white uppercase sm:mt-6"
           >
             {
               words.map((word, i) => (
