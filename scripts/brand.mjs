@@ -51,7 +51,7 @@ const card = (w, h) => `
     <text x="62" y="384" font-size="142" fill-opacity="0.4">ARE</text>
     <text x="62" y="518" font-size="142">WATCHING</text>
   </g>
-  <text x="72" y="${h - 62}" font-family="${MONO}" font-size="20" letter-spacing="3" fill="#ffffff" fill-opacity="0.42">кожне число — з документа · виноски на першоджерела</text>
+  <text x="72" y="${h - 62}" font-family="${MONO}" font-size="20" letter-spacing="3" fill="#ffffff" fill-opacity="0.42">кожне число — з документа · посилання на першоджерела</text>
 </svg>`
 
 const png = (svg, out, size) =>

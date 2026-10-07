@@ -18,7 +18,7 @@ const REPO = 'https://github.com/activeorgua-bit/investigations'
 export const SITE: Site = {
   title: 'People are watching',
   description:
-    'Розслідування на основі відкритих даних: кожне число — з факту, кожна цитата — з першоджерела, кожна виноска веде на документ.',
+    'Розслідування на основі відкритих даних: кожне число — з факту, кожна цитата — з першоджерела, кожне джерело — з посиланням на документ.',
   href: SITE_URL,
   author: 'People are watching',
   locale: 'uk-UA',
@@ -79,7 +79,7 @@ export const LANDING: LandingContent = {
   featuredWorkIntro: '',
   archiveTitle: 'Останні розслідування',
   archiveIntro:
-    'Кожен текст — з виносками на першоджерела. Відкрийте будь-яку й перевірте самі.',
+    'Кожне джерело в тексті — з посиланням на першоджерело. Відкрийте будь-яке й перевірте самі.',
   primaryLink: {
     href: '/blog',
     label: 'Читати розслідування',
