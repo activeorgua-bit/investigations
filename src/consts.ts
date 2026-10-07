@@ -70,7 +70,7 @@ export const PROFILE: Profile = {
 
 export const LANDING: LandingContent = {
   name: 'People are watching',
-  monogram: 'PW',
+  monogram: '👁︎',
   eyebrow: 'Розслідування на основі відкритих даних',
   description: SITE.description,
   manifesto:

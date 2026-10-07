@@ -35,7 +35,7 @@ const repoLink =
         isAtmospheric ? (
           <>
             <span class="inline-flex size-10 items-center justify-center rounded-full border border-white/15 bg-white/[0.06] font-mono text-[0.64rem] tracking-[0.36em] text-white/88 uppercase">
-              {LANDING.monogram}
+              <span class="brand-eye" aria-hidden="true">{LANDING.monogram}</span>
             </span>
             <span class="hidden h-full text-[0.7rem] leading-none font-medium tracking-[0.38em] text-white/58 uppercase min-[520px]:block">
               {LANDING.name}
@@ -44,7 +44,7 @@ const repoLink =
         ) : (
           <>
             <span class="border-border bg-muted text-foreground/86 inline-flex size-9 items-center justify-center rounded-full border font-mono text-[0.64rem] tracking-[0.28em] uppercase">
-              {LANDING.monogram}
+              <span class="brand-eye" aria-hidden="true">{LANDING.monogram}</span>
             </span>
             <span class="hidden h-full text-lg leading-none font-medium min-[400px]:block">
               {SITE.title}

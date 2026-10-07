@@ -118,3 +118,13 @@
   outline: 2px solid rgba(255, 255, 255, 0.72);
   outline-offset: 3px;
 }
+
+/* монограма шапки — монохромне око (текстовий варіант U+1F441 U+FE0E), без кольорового емодзі */
+.brand-eye {
+  font-family: "Segoe UI Symbol", "Noto Sans Symbols 2", "Noto Sans Symbols", "Apple Symbols", "DejaVu Sans", sans-serif;
+  font-variant-emoji: text;
+  font-size: 1.15rem;
+  letter-spacing: 0;
+  line-height: 1;
+  text-transform: none;
+}
