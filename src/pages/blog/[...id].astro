@@ -162,13 +162,10 @@ const tocSections = await getTOCSections(currentPostId)
             post.data.tags && post.data.tags.length > 0 && (
               <div class="mt-6 flex flex-wrap gap-2">
                 {post.data.tags.map((tag) => (
-                  <a
-                    href={withBase(`/tags/${tag}`)}
-                    class="immersive-chip immersive-chip--solid"
-                  >
+                  <span class="immersive-chip immersive-chip--solid">
                     <Icon name="lucide:hash" class="size-3" />
                     {tag}
-                  </a>
+                  </span>
                 ))}
               </div>
             )

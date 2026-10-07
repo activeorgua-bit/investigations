@@ -28,7 +28,7 @@ export const SITE: Site = {
 
 export const NAV_LINKS: SocialLink[] = [
   { href: '/blog', label: 'розслідування' },
-  { href: '/tags', label: 'теми' },
+  // { href: '/tags', label: 'теми' },  // розділ «Теми» тимчасово прихований
   { href: '/about', label: 'метод' },
 ]
 
@@ -120,7 +120,6 @@ export const FOOTER: FooterContent = {
   linksLabel: 'Посилання',
   contactLinks: [
     { href: '/blog', label: 'Розслідування' },
-    { href: '/tags', label: 'Теми' },
     { href: '/about', label: 'Метод' },
     { href: '/rss.xml', label: 'RSS' },
     { href: REPO, label: 'GitHub' },
